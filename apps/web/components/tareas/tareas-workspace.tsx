@@ -4,6 +4,7 @@ import { Badge, Button, Card, CardDescription, CardHeader, CardTitle, Input } fr
 import type { Miembro, Tarea } from '@crm/shared';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
+import { showToast } from '../../lib/ui/toast';
 
 interface TareasWorkspaceProps {
   tareas: Tarea[];
@@ -48,6 +49,7 @@ export function TareasWorkspace({ tareas, miembros, actorOrganizationId }: Tarea
 
       setTitle('');
       setDescription('');
+      showToast({ message: 'Tarea creada correctamente.', tone: 'success' });
       router.refresh();
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : 'Error inesperado');
@@ -79,6 +81,7 @@ export function TareasWorkspace({ tareas, miembros, actorOrganizationId }: Tarea
         throw new Error(data?.message ?? 'No se pudo asignar la tarea');
       }
 
+      showToast({ message: 'Tarea asignada correctamente.', tone: 'success' });
       router.refresh();
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : 'Error inesperado');
@@ -102,6 +105,7 @@ export function TareasWorkspace({ tareas, miembros, actorOrganizationId }: Tarea
         throw new Error(data?.message ?? 'No se pudo completar la tarea');
       }
 
+      showToast({ message: 'Tarea marcada como completada.', tone: 'success' });
       router.refresh();
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : 'Error inesperado');
@@ -145,7 +149,6 @@ export function TareasWorkspace({ tareas, miembros, actorOrganizationId }: Tarea
           </div>
 
           {error ? <div className="error-box">{error}</div> : null}
-
           <Button type="submit" disabled={isCreating}>
             {isCreating ? 'Creando…' : 'Crear tarea'}
           </Button>

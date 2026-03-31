@@ -9,3 +9,4 @@ coverage
 !.env.example
 pnpm-lock.yaml
 prisma/dev.db
+*.tsbuildinfo
