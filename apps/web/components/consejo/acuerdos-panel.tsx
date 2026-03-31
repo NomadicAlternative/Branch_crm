@@ -4,6 +4,7 @@ import { Badge, Button, Card, CardDescription, CardHeader, CardTitle } from '@cr
 import type { AcuerdoConsejo } from '@crm/shared';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { showToast } from '../../lib/ui/toast';
 
 const ESTADOS = ['pendiente', 'en_progreso', 'completado'] as const;
 
@@ -34,6 +35,7 @@ export function AcuerdosPanel({ acuerdos }: { acuerdos: AcuerdoConsejo[] }) {
         throw new Error(data?.message ?? 'No se pudo actualizar el acuerdo');
       }
 
+      showToast({ message: `Acuerdo actualizado a ${estado}.`, tone: 'success' });
       router.refresh();
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : 'Error inesperado');

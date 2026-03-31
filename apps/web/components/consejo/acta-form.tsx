@@ -4,6 +4,7 @@ import { Button, Card, CardDescription, CardHeader, CardTitle, Input } from '@cr
 import type { Miembro } from '@crm/shared';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { setFlashToast } from '../../lib/ui/toast';
 
 interface DraftAgreement {
   titulo: string;
@@ -56,6 +57,7 @@ export function ActaForm({ miembros, actorOrganizationId }: { miembros: Miembro[
         throw new Error(data?.message ?? 'No se pudo crear el acta');
       }
 
+      setFlashToast({ message: 'Acta creada correctamente.', tone: 'success' });
       router.push('/consejo');
       router.refresh();
     } catch (submissionError) {

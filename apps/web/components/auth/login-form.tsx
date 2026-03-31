@@ -4,6 +4,7 @@ import { Button, Card, CardDescription, CardHeader, CardTitle, Input } from '@cr
 import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
+import { setFlashToast } from '../../lib/ui/toast';
 
 export function LoginForm() {
   const router = useRouter();
@@ -31,6 +32,7 @@ export function LoginForm() {
         throw new Error(data?.message ?? 'No se pudo iniciar sesión');
       }
 
+      setFlashToast({ message: 'Sesión iniciada correctamente.', tone: 'success' });
       router.push('/dashboard');
       router.refresh();
     } catch (submissionError) {

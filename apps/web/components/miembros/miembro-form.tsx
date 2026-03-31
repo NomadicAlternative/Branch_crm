@@ -5,6 +5,7 @@ import type { Miembro } from '@crm/shared';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
+import { setFlashToast } from '../../lib/ui/toast';
 
 const ROLE_OPTIONS = [
   { value: 'presidente_rama', label: 'Presidente de rama' },
@@ -64,7 +65,11 @@ export function MiembroForm({ mode, actorOrganizationId, miembro }: MiembroFormP
         throw new Error(data?.message ?? 'No se pudo guardar el miembro');
       }
 
-      router.push(mode === 'create' ? '/miembros' : `/miembros/${miembro?.id}`);
+      setFlashToast({
+        message: mode === 'create' ? 'Miembro creado correctamente.' : 'Miembro actualizado correctamente.',
+        tone: 'success',
+      });
+      router.push('/miembros');
       router.refresh();
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : 'Error inesperado');
